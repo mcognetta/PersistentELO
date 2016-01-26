@@ -1,6 +1,5 @@
-# !python2
 import math
-import elo
+
 class Player(object):
 
     def __init__(self,name='player',elo=1200.0,wins=0,losses=0,draws=0):
