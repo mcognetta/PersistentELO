@@ -34,7 +34,7 @@ class Player(object):
         return math.ceil(self.elo)
 
     def __str__(self):
-        return """Player: %s \n
+        return """\t\tPlayer: %s \n
                 Elo: %0.2f\n
                 Record: %d-%d-%d""" % (self.name,self.elo,self.wins,self.losses,self.draws)
 
