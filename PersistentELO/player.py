@@ -31,11 +31,11 @@ class Player(object):
         return self.rating >= other.rating
     
     def __int__(self):
-        return math.ceil(self.rating)
+        return math.round(self.rating)
 
     def __str__(self):
         return """\t\tPlayer: %s \n
-                rating: %0.2f\n
+                Rating: %0.2f\n
                 Record: %d-%d-%d""" % (self.name,self.rating,self.wins,self.losses,self.draws)
 
     __repr__ = __str__
