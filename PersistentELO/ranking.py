@@ -1,29 +1,26 @@
-import player, elo
+import player
 import pickle, glob, os
 
 class Ranking(object):
-    
+
     """Creates a ranking object.
 
     Arguments:
 
     data_dir (string) - The directory where the rankings will be stored.
-    elo (elo object) - The elo system that will be used to calculate rankings
 
 
     Usage Example:
 
-    >>>e = elo.ELO()
-    >>>r = ranking.Ranking('path/to/dir',e)
+    >>>r = ranking.Ranking('path/to/dir')
 
     Note:
 
     If the desired directory does not exist, one will be created
     """
 
-    def __init__(self,data_dir,elo):
+    def __init__(self,data_dir):
 
-        self.elo = elo
         self.data_dir = data_dir
         self.players = []
 
