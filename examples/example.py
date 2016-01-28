@@ -1,5 +1,9 @@
 import sys,os,random
-sys.path.append("%s\\.." % (os.getcwd())) #this seems bad
+
+if 'linux' not in sys.platform:
+    sys.path.append("%s\\.." % (os.getcwd()))
+else:
+    sys.path.append("%s/.." % os.getcwd())
 
 from PersistentELO import player,ranking,elo
 
@@ -11,7 +15,10 @@ def main():
     '''
 
     e = elo.ELO()
-    r = ranking.Ranking("%s\\test_ranking" % os.getcwd())
+    if 'linux' not in sys.platform:
+        r = ranking.Ranking("%s\\test_ranking" % os.getcwd())
+    else:
+        r = ranking.Ranking("%s/test_ranking" % os.getcwd())
 
     p1 = player.Player("p1")
     p2 = player.Player("p2")
@@ -102,7 +109,6 @@ def main():
         player_1,player_2 = random.choice(r.players),random.choice(r.players)
         p1_win_percent = e.expected_score(player_1,player_2)[0]
         rand = random.random()
-        print p1_win_percent,rand
         if rand < p1_win_percent:
             score = scores[0]
         else:
@@ -112,10 +118,10 @@ def main():
         r.store_player(player_2)
     
     '''
-    Print the players out after the games
+    Print the players out after the games sorted by rank
     '''
 
-    for p in r.players:
+    for p in sorted(r.players,key = lambda x: x.rating, reverse = True):
         print "\n"
         print p
 
