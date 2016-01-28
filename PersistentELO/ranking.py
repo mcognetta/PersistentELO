@@ -30,7 +30,7 @@ class Ranking(object):
 
         if os.path.exists(data_dir):
             os.chdir(data_dir)
-            for f in glob.glob(".pickle"):
+            for f in glob.glob("*.pickle"):
                 file = open(f,'rb')
                 player_info = pickle.load(file)
                 self.players.append(player_info)
@@ -59,8 +59,8 @@ class Ranking(object):
         """
 
         if any(x.name == p.name for x in self.players):
-            print "Could not add player. There already \
-            exists a player with the name %s." % (p.name)
+            print "Could not add player. There already " \
+            "exists a player with the name %s." % (p.name)
 
         else:
 
@@ -106,9 +106,8 @@ class Ranking(object):
 
         os.chdir(self.data_dir)
         self.players = []
-        print glob.glob(".pickle")
-        for f in glob.glob(".pickle"):
-            print f
+
+        for f in glob.glob("*.pickle"):
             file = open(f,'rb')
             self.players.append(pickle.load(file))
             file.close()
