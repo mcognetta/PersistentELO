@@ -120,30 +120,29 @@ class ELO(object):
         
         """
 
-        assert p1 is not p2, "Players must be different."
+        if p1 is not p2:
 
+            score = tuple(score)
+            
+            p1_expected,p2_expected = self.expected_score(p1,p2)
 
-        score = tuple(score)
-        
-        p1_expected,p2_expected = self.expected_score(p1,p2)
+            p1_score = score[0]
+            p2_score = score[1]
 
-        p1_score = score[0]
-        p2_score = score[1]
+            p1.rating += self.k_factor*(p1_score-p1_expected)
+            p2.rating += self.k_factor*(p2_score-p2_expected)
 
-        p1.rating += self.k_factor*(p1_score-p1_expected)
-        p2.rating += self.k_factor*(p2_score-p2_expected)
-
-        if score == (1,0):
-            p1.wins += 1
-            p2.losses += 1
-        elif score == (0,1):
-            p1.losses += 1
-            p2.wins += 1
-        elif score == (.5,.5):
-            p1.draws += 1
-            p2.draws += 1
-        else:
-            print "Not a valid match score"
+            if score == (1,0):
+                p1.wins += 1
+                p2.losses += 1
+            elif score == (0,1):
+                p1.losses += 1
+                p2.wins += 1
+            elif score == (.5,.5):
+                p1.draws += 1
+                p2.draws += 1
+            else:
+                print "Not a valid match score"
 
     def __str__(self):
 
