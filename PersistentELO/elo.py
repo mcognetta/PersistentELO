@@ -90,7 +90,6 @@ class ELO(object):
         return p1_expected,p2_expected
 
     def update_elo(self,p1,p2,score):
-
         
         """Calucates and updates the elo for two players
         after a match has been performed.
@@ -114,8 +113,15 @@ class ELO(object):
 
         updated_p1_score = p1_elo + k*(p1_score - E_1)
         updated_p2_score = p2_elo + k*(p2_score - E_2)
+
+        Note:
+
+        If p1 and p2 are the same object this will print an error
         
         """
+
+        assert p1 is not p2, "Players must be different"
+
 
         score = tuple(score)
         
