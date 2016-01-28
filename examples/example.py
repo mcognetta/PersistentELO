@@ -71,6 +71,10 @@ def main():
         r.store_player(r.players[i%3])
         r.store_player(r.players[(i+1)%3])
     
+    '''
+    Print the players out after the games
+    '''
+
     for p in r.players:
         print "\n"
         print p
