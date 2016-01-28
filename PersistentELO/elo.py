@@ -61,7 +61,7 @@ class ELO(object):
 
         return math.pow(10,p.rating/400)
 
-    def expected_score(self,player1,player2):
+    def expected_score(self,p1,p2):
 
         """Returns a list of percent chance that each player
         is expected to win.
@@ -120,7 +120,7 @@ class ELO(object):
         
         """
 
-        assert p1 is not p2, "Players must be different"
+        assert p1 is not p2, "Players must be different."
 
 
         score = tuple(score)
