@@ -17,6 +17,10 @@ class Ranking(object):
     Note:
 
     If the desired directory does not exist, one will be created
+
+    Also creates a match_history.csv file for the ranking system
+    that will hold a record of played games.
+
     """
 
     def __init__(self,data_dir):
@@ -38,6 +42,10 @@ class Ranking(object):
 
         else:
             os.mkdir(data_dir)
+            os.chdir(data_dir)
+            file = open('match_history.csv','wb')
+            file.write('p1_name,p1_rating,p2_name,p2_rating,p1_score,p2_score\n')
+            file.close()
 
     def add_player(self,p):
 
@@ -120,7 +128,27 @@ class Ranking(object):
         
         os.chdir(self.data_dir)
 
-        file = open('%s.pickle' % p.name,'wb')
+        file = open('%s.pickle' % p.name,'w')
         pickle.dump(p,file)
         file.close()
+
+    def store_game(self,p1,p2,score):
+
+        """Stores a record of a played game.
+
+        Gets the score of a game and the updated ratings
+        of the involved players and writes it to the 
+        match_history.csv file in the data_dir.
+
+        """
+        os.chdir(self.data_dir)
+        file=open('match_history.csv','ab')
+        file.write('%s,%02f,%s,%02f,%s,%s\n'% (p1.name,\
+                                            p1.rating,\
+                                            p2.name,\
+                                            p2.rating,\
+                                            str(score[0]),\
+                                            str(score[1])))
+        file.close()
+
 

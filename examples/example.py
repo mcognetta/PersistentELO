@@ -104,7 +104,7 @@ def main():
     '''
     scores = [(1,0),(0,1),(.5,.5)]
 
-    for i in range(10000):
+    for i in range(100):
         
         player_1,player_2 = random.choice(r.players),random.choice(r.players)
         p1_win_percent = e.expected_score(player_1,player_2)[0]
@@ -116,6 +116,7 @@ def main():
         e.update_elo(player_1,player_2,score)
         r.store_player(player_1)
         r.store_player(player_2)
+        r.store_game(player_1,player_2,score)
     
     '''
     Print the players out after the games sorted by rank
