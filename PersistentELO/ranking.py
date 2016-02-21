@@ -1,5 +1,5 @@
 import player
-import pickle, glob, os
+import pickle, glob, os, sqlite3
 
 class Ranking(object):
 
