@@ -41,7 +41,7 @@ def main():
     Add players to the rankings
     '''
 
-    print "ADDING PLAYERS:\n"
+    print("ADDING PLAYERS:\n")
 
     r.add_player(p1)
     r.add_player(p2)
@@ -59,53 +59,16 @@ def main():
     r.add_player(p14)
     r.add_player(p15)
 
-    print "\n##################################"
+    print(r.get_all_players())
 
-    '''
-    List currently loaded players (at this point all of them)
-    '''
-
-    r.list_all_loaded_players()
-
-    '''
-    Unload all the players from the ranking
-    '''
-
-    r.players = []
-
-    '''
-    Test to see that they are all gone
-    '''
-    for p in r.players:
-        print "\n"
-        print p
-
-    print "\n##################################"
-
-    '''
-    Reload all the players
-    '''
-
-    r.get_all_players()
-
-    '''
-    Test to see that they are all back
-    '''
-
-
-    for p in r.players:
-        print "\n"
-        print p
-
-    print "\n##################################"
-
+    print("\n##################################")
+    
     '''
     Play a few games randomly
     '''
     scores = [(1,0),(0,1),(.5,.5)]
 
     for i in range(100):
-        
         player_1,player_2 = random.choice(r.players),random.choice(r.players)
         p1_win_percent = e.expected_score(player_1,player_2)[0]
         rand = random.random()
@@ -118,13 +81,9 @@ def main():
         r.store_player(player_2)
         r.store_game(player_1,player_2,score)
     
-    '''
-    Print the players out after the games sorted by rank
-    '''
-
-    for p in sorted(r.players,key = lambda x: x.rating, reverse = True):
-        print "\n"
-        print p
+    print("Current Rankings:")
+    for p in sorted(r.players,key=lambda x: x.rating,reverse=True):
+        print(p)
 
 
 if __name__ == "__main__":

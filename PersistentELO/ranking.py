@@ -1,5 +1,6 @@
 import player
-import pickle, glob, os, sqlite3
+import glob, os
+import sqlite3 as sqlite
 
 class Ranking(object):
 
@@ -34,15 +35,33 @@ class Ranking(object):
 
         if os.path.exists(data_dir):
             os.chdir(data_dir)
-            for f in glob.glob("*.pickle"):
-                file = open(f,'rb')
-                player_info = pickle.load(file)
-                self.players.append(player_info)
-                file.close()
+            
+            db = sqlite.connect('rankings.db')
+            cur = db.cursor()
+            
+            cur.execute('SELECT * FROM Players')
+            
+            data = cur.fetchall()
+            
+            for d in data:
+                name,rating,wins,losses,draws = d
+                self.players.append(player.Player(name,rating,wins,losses,draws))
+            
+            db.close()
+
 
         else:
-            os.mkdir(data_dir)
-            os.chdir(data_dir)
+            os.mkdir(self.data_dir)
+            os.chdir(self.data_dir)
+
+            db = sqlite.connect('rankings.db')
+            cur = db.cursor()
+            
+            cur.execute('Create TABLE Players(Name TEXT, Rating REAL, Wins INT, Losses INT, Draws INT)')
+            db.commit()
+            
+            db.close()
+
             file = open('match_history.csv','wb')
             file.write('p1_name,p1_rating,p2_name,p2_rating,p1_score,p2_score\n')
             file.close()
@@ -65,72 +84,68 @@ class Ranking(object):
         the player passed in will not be added.
 
         """
-
-        if any(x.name == p.name for x in self.players):
-            print "Could not add player. There already " \
-            "exists a player with the name %s." % (p.name)
-
+        os.chdir(self.data_dir)
+        
+        db = sqlite.connect('rankings.db')
+        cur = db.cursor()
+        
+        cur.execute('SELECT EXISTS(SELECT 1 FROM Players WHERE Name=? LIMIT 1)',(p.name,))
+        db.commit()
+        
+        exists = cur.fetchone()[0]
+        
+        if exists:
+            db.close()
+            return False
+        
         else:
-
-            self.players.append(p)
+            cur.execute('INSERT INTO Players VALUES(?,?,?,?,?)',(p.name,p.rating,p.wins,p.losses,p.draws,))
+            db.commit()
             
-            os.chdir(self.data_dir)
+            db.close()
+            
+            self.players.append(p)
 
-            new_pickle = open('%s.pickle' % p.name,'wb')
-            pickle.dump(p,new_pickle)
-            new_pickle.close()
-
-    def list_all_loaded_players(self):
-
-        """Prints all players currently loaded into the players list."""
-
-        print "All Loaded Players:\n"
-        for p in self.players:
-            print p
-            print "\n"
-
-    def get_all_loaded_players(self):
-
-        """Returns a list of all loaded player objects"""
-
-        return self.players
-
-    def list_all_players(self):
-        """Prints all players stored in the data_dir"""
-
-        self.get_all_players()
-        print "\n".join(self.players)
+            return True
 
     def get_all_players(self):
 
-        """Returns a list of all players in data_dir
-
-        This method clears the current players list and
-        readds all players that are stored in the data_dir.
-
-        It will be slow if there are a large amount of players
-
-        """
+        """Prints all players currently in the rankings database"""
 
         os.chdir(self.data_dir)
-        self.players = []
+        
+        db = sqlite.connect('rankings.db')
+        cur = db.cursor()
+        
+        cur.execute('SELECT * FROM Players')
+        
+        data = cur.fetchall()
 
-        for f in glob.glob("*.pickle"):
-            file = open(f,'rb')
-            self.players.append(pickle.load(file))
-            file.close()
-
-        return self.players
+        db.close()
+        return data
 
     def store_player(self,p):
 
-        """Stores a player profile in data_dir"""
+        """Updates/Stores a player profile in the rankings database"""
         
         os.chdir(self.data_dir)
 
-        file = open('%s.pickle' % p.name,'w')
-        pickle.dump(p,file)
-        file.close()
+        db = sqlite.connect('rankings.db')
+        cur = db.cursor()
+        
+        cur.execute('SELECT EXISTS(SELECT 1 FROM Players WHERE Name=? LIMIT 1)',(p.name,))
+        
+        exists = cur.fetchone()
+        
+        if exists:
+            cur.execute('UPDATE Players SET Rating=?,Wins=?,Losses=?,Draws=? WHERE Name=?',(p.rating,p.wins,p.losses,p.draws,p.name))
+            db.commit()
+            db.close()
+            return True
+
+        else:
+            db.close()
+            return False
 
     def store_game(self,p1,p2,score):
 
@@ -150,5 +165,3 @@ class Ranking(object):
                                             str(score[0]),\
                                             str(score[1])))
         file.close()
-
-
