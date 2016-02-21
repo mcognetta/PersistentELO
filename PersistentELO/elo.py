@@ -142,7 +142,7 @@ class ELO(object):
                 p1.draws += 1
                 p2.draws += 1
             else:
-                print "Not a valid match score"
+                print("Not a valid match score")
 
     def __str__(self):
 
