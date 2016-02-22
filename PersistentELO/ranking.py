@@ -158,7 +158,7 @@ class Ranking(object):
         """
         os.chdir(self.data_dir)
         file=open('match_history.csv','ab')
-        file.write('%s,%02f,%s,%02f,%s,%s\n'% (p1.name,\
+        file.write('%s,%f,%s,%f,%s,%s\n'% (p1.name,\
                                             p1.rating,\
                                             p2.name,\
                                             p2.rating,\
