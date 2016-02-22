@@ -1,8 +1,8 @@
 import math
-import player
+import PersistentELO.player as player
 
 class ELO(object):
-    
+
     """Creates an ELO object.
 
     Arguments:
@@ -18,12 +18,12 @@ class ELO(object):
     >>>e = ELO(k_factor=25) #for an elo with k-factor of 25
 
     """
-    
-    def __init__(self,k_factor=32):
+
+    def __init__(self, k_factor=32):
         self.k_factor = k_factor
 
-    def expected_victor(self,p1,p2):
-        
+    def expected_victor(self, p1, p2):
+
         """Returns the player with the higher elo
         as that player is expected to win.
 
@@ -38,11 +38,11 @@ class ELO(object):
         it returns the first parameter player.
 
         """
-        
+
         return p1 if p1 >= p2 else p2
 
-    def transformed_rating(self,p):
-        
+    def transformed_rating(self, p):
+
         """Returns the transformed score of a player.
 
         Arguments:
@@ -59,14 +59,14 @@ class ELO(object):
 
         """
 
-        return math.pow(10,p.rating/400)
+        return math.pow(10, p.rating/400)
 
-    def expected_score(self,p1,p2):
+    def expected_score(self, p1, p2):
 
         """Returns a list of percent chance that each player
         is expected to win.
 
-        Expected scores are calcuated thusly: 
+        Expected scores are calcuated thusly:
 
         Q_1 := transformed rating for player 1
         Q_2 := transformed rating for player 2
@@ -78,7 +78,7 @@ class ELO(object):
         E_2 = Q_2/(Q_1+Q_2)
 
         returns E_1,E_2
-        
+
         """
 
         p1_transform = self.transformed_rating(p1)
@@ -89,14 +89,14 @@ class ELO(object):
 
         return p1_expected,p2_expected
 
-    def update_elo(self,p1,p2,score):
-        
+    def update_elo(self, p1, p2, score):
+
         """Calucates and updates the elo for two players
         after a match has been performed.
 
         player1 and player2 are player objects
         score is an iterable contianing the score of the match
-            
+
             (1,0) indicates a win for player 1
             (0,1) indicates a win for player 2
             (.5,.5) indicates a draw
@@ -117,14 +117,14 @@ class ELO(object):
         Note:
 
         If p1 and p2 are the same object this will print an error
-        
+
         """
 
         if p1 is not p2:
 
             score = tuple(score)
-            
-            p1_expected,p2_expected = self.expected_score(p1,p2)
+
+            p1_expected, p2_expected = self.expected_score(p1,p2)
 
             p1_score = score[0]
             p2_score = score[1]

@@ -1,5 +1,5 @@
-import player
-import glob, os
+import PersistentELO.player as player
+import os
 import sqlite3 as sqlite
 
 class Ranking(object):
@@ -24,7 +24,7 @@ class Ranking(object):
 
     """
 
-    def __init__(self,data_dir):
+    def __init__(self, data_dir):
 
         self.data_dir = data_dir
         self.players = []
@@ -35,18 +35,18 @@ class Ranking(object):
 
         if os.path.exists(data_dir):
             os.chdir(data_dir)
-            
+
             db = sqlite.connect('rankings.db')
             cur = db.cursor()
-            
+
             cur.execute('SELECT * FROM Players')
-            
+
             data = cur.fetchall()
-            
+
             for d in data:
-                name,rating,wins,losses,draws = d
-                self.players.append(player.Player(name,rating,wins,losses,draws))
-            
+                name, rating, wins, losses, draws = d
+                self.players.append(player.Player(name, rating, wins, losses, draws))
+
             db.close()
 
 
@@ -56,17 +56,17 @@ class Ranking(object):
 
             db = sqlite.connect('rankings.db')
             cur = db.cursor()
-            
+
             cur.execute('Create TABLE Players(Name TEXT, Rating REAL, Wins INT, Losses INT, Draws INT)')
             db.commit()
-            
+
             db.close()
 
             file = open('match_history.csv','wb')
             file.write('p1_name,p1_rating,p2_name,p2_rating,p1_score,p2_score\n')
             file.close()
 
-    def add_player(self,p):
+    def add_player(self, p):
 
         """Adds a player to the ranking.
 
@@ -85,25 +85,25 @@ class Ranking(object):
 
         """
         os.chdir(self.data_dir)
-        
+
         db = sqlite.connect('rankings.db')
         cur = db.cursor()
-        
+
         cur.execute('SELECT EXISTS(SELECT 1 FROM Players WHERE Name=? LIMIT 1)',(p.name,))
         db.commit()
-        
+
         exists = cur.fetchone()[0]
-        
+
         if exists:
             db.close()
             return False
-        
+
         else:
             cur.execute('INSERT INTO Players VALUES(?,?,?,?,?)',(p.name,p.rating,p.wins,p.losses,p.draws,))
             db.commit()
-            
+
             db.close()
-            
+
             self.players.append(p)
 
             return True
@@ -113,32 +113,33 @@ class Ranking(object):
         """Prints all players currently in the rankings database"""
 
         os.chdir(self.data_dir)
-        
+
         db = sqlite.connect('rankings.db')
         cur = db.cursor()
-        
+
         cur.execute('SELECT * FROM Players')
-        
+
         data = cur.fetchall()
 
         db.close()
         return data
 
-    def store_player(self,p):
+    def store_player(self, p):
 
         """Updates/Stores a player profile in the rankings database"""
-        
+
         os.chdir(self.data_dir)
 
         db = sqlite.connect('rankings.db')
         cur = db.cursor()
-        
+
         cur.execute('SELECT EXISTS(SELECT 1 FROM Players WHERE Name=? LIMIT 1)',(p.name,))
-        
+
         exists = cur.fetchone()
-        
+
         if exists:
-            cur.execute('UPDATE Players SET Rating=?,Wins=?,Losses=?,Draws=? WHERE Name=?',(p.rating,p.wins,p.losses,p.draws,p.name))
+            cur.execute('UPDATE Players SET Rating=?,Wins=?,Losses=?,Draws=? WHERE Name=?',
+                       (p.rating,p.wins,p.losses,p.draws,p.name))
             db.commit()
             db.close()
             return True
@@ -147,7 +148,7 @@ class Ranking(object):
             db.close()
             return False
 
-    def store_game(self,p1,p2,score):
+    def store_game(self, p1, p2, score):
 
         """Stores a record of a played game.
 
@@ -157,7 +158,7 @@ class Ranking(object):
 
         """
         os.chdir(self.data_dir)
-        file=open('match_history.csv','ab')
+        file = open('match_history.csv','ab')
         file.write('%s,%f,%s,%f,%s,%s\n'% (p1.name,\
                                             p1.rating,\
                                             p2.name,\

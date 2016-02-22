@@ -29,7 +29,7 @@ class Player(object):
 
     """
 
-    def __init__(self,name='player',rating=1200.0,wins=0,losses=0,draws=0):
+    def __init__(self, name, rating=1200.0, wins=0, losses=0, draws=0):
         self.name = name
         self.rating = float(rating)
         self.wins = wins
@@ -39,24 +39,24 @@ class Player(object):
     def total_games(self):
         return self.wins+self.losses+self.draws
 
-    def __eq__(self,other):
+    def __eq__(self, other):
         return self.rating == other.rating
-    
-    def __ne__(self,other):
+
+    def __ne__(self, other):
         return self.rating != other.rating
-    
-    def __lt__(self,other):
+
+    def __lt__(self, other):
         return self.rating < other.rating
-    
-    def __gt__(self,other):
+
+    def __gt__(self, other):
         return self.rating > other.rating
-    
-    def __le__(self,other):
+
+    def __le__(self, other):
         return self.rating <= other.rating
-    
-    def __ge__(self,other):
+
+    def __ge__(self, other):
         return self.rating >= other.rating
-    
+
     def __int__(self):
         return math.round(self.rating)
 
