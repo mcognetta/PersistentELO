@@ -46,11 +46,11 @@ Network Trash Folder
 Temporary Items
 .apdisk
 *.pyc
+dist
+
 examples/test_ranking/p1.pickle
 examples/test_ranking/p2.pickle
 examples/test_ranking/p3.pickle
-
-#test
 examples/test_ranking/p10.pickle
 examples/test_ranking/p11.pickle
 examples/test_ranking/p13.pickle
