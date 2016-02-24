@@ -17,7 +17,7 @@ Used to rank players and store them in a database. Also holds the match history 
 
 ###Basic:
 
-'''python
+```python
 from PersistentELO import player, elo, ranking
 
 p_1 = player.Player("p_1") #create a player named p_1, everything else is set to default
@@ -35,12 +35,12 @@ e.update_elo(p_1,p_2,(0,1)) #calculate a loss for p_1 and update p_1 and p_2's p
 r.store_player(p_1) #store both players and the match record in the ranking's directory
 r.store_player(p_2)
 r.store_game(p_1,p_2,(0,1))
-'''
+```
 
 ###Multiple Simulatious Rankings
 We will consider two players playing each other in StarCraft.
 
-'''
+```python
 from PersistentELO import player,elo,ranking
 
 p_1 = player.Player('p_1')
@@ -70,10 +70,10 @@ player_ranking.store_player(p_1)
 player_ranking.store_player(p_2)
 race_ranking.store_player(t)
 race_ranking.store_player(z)
-'''
+```
 
 ###Multiple ELO schemes (like in chess)
-'''
+```python
 from PersistentELO import player,elo,ranking
 
 p_1 = player.Player('p_1')
@@ -98,4 +98,4 @@ else:
 r.store_player(p_1)
 r.store_player(p_2)
 r.store_game(p_1,p_2,(1,0))
-'''
+```
