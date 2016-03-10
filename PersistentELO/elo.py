@@ -1,5 +1,4 @@
 import math
-import PersistentELO.player as player
 
 class ELO(object):
 

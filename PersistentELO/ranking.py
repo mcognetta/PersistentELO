@@ -1,6 +1,6 @@
-import PersistentELO.player as player
 import os
 import sqlite3 as sqlite
+import PersistentELO.player as player
 
 class Ranking(object):
 
@@ -159,7 +159,7 @@ class Ranking(object):
         """
         os.chdir(self.data_dir)
         file = open('match_history.csv','ab')
-        file.write('%s,%f,%s,%f,%s,%s\n'% (p1.name,\
+        file.write('{},{},{},{},{},{}\n'.format(p1.name,\
                                             p1.rating,\
                                             p2.name,\
                                             p2.rating,\

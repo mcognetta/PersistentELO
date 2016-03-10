@@ -1,7 +1,4 @@
-import math
-
 class Player(object):
-
     """Creates a Player Object
 
     Arguments:
@@ -58,10 +55,10 @@ class Player(object):
         return self.rating >= other.rating
 
     def __int__(self):
-        return math.round(self.rating)
+        return round(self.rating)
 
     def __str__(self):
-        return """Player: %s\nRating: %0.2f\nRecord: %d-%d-%d""" \
-                % (self.name,self.rating,self.wins,self.losses,self.draws)
+        return """Player: {}\nRating: {}\nRecord: {}-{}-{}""" \
+                .format(self.name,self.rating,self.wins,self.losses,self.draws)
 
     __repr__ = __str__
