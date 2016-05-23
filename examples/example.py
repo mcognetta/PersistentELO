@@ -1,12 +1,5 @@
 import sys,os,random
-
-if 'linux' not in sys.platform:
-    sys.path.append("%s\\.." % (os.getcwd()))
-else:
-    sys.path.append("%s/.." % os.getcwd())
-
 from PersistentELO import player,ranking,elo
-
 
 def main():
 
@@ -15,10 +8,7 @@ def main():
     '''
 
     e = elo.ELO()
-    if 'linux' not in sys.platform:
-        r = ranking.Ranking("%s\\test_ranking" % os.getcwd())
-    else:
-        r = ranking.Ranking("%s/test_ranking" % os.getcwd())
+    r = ranking.Ranking(os.path.join(os.getcwd(),'test_ranking'))
 
     p1 = player.Player("p1")
     p2 = player.Player("p2")
@@ -35,7 +25,6 @@ def main():
     p13 = player.Player("p13")
     p14 = player.Player("p14")
     p15 = player.Player("p15")
-
 
     '''
     Add players to the rankings
@@ -84,7 +73,6 @@ def main():
     print("Current Rankings:")
     for p in sorted(r.players,key=lambda x: x.rating,reverse=True):
         print(p)
-
 
 if __name__ == "__main__":
 
