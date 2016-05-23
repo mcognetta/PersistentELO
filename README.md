@@ -1,4 +1,3 @@
-[![Coverage Status](https://coveralls.io/repos/github/mcognetta/PersistentELO/badge.svg?branch=master)](https://coveralls.io/github/mcognetta/PersistentELO?branch=master)
 # PersistentELO
 
 Library for Persistent ELO rankings. Allows users to have an elo ranking system that persists even if your code is stopped.
