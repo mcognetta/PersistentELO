@@ -62,7 +62,7 @@ class Ranking(object):
 
             db.close()
 
-            file = open('match_history.csv','wb')
+            file = open('match_history.csv','a')
             file.write('p1_name,p1_rating,p2_name,p2_rating,p1_score,p2_score\n')
             file.close()
 
@@ -158,7 +158,8 @@ class Ranking(object):
 
         """
         os.chdir(self.data_dir)
-        file = open('match_history.csv','ab')
+        file = open('match_history.csv','a')
+        print('test')
         file.write('{},{},{},{},{},{}\n'.format(p1.name,\
                                             p1.rating,\
                                             p2.name,\
