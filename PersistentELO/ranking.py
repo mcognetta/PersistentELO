@@ -49,7 +49,6 @@ class Ranking(object):
 
             db.close()
 
-
         else:
             os.mkdir(self.data_dir)
             os.chdir(self.data_dir)
@@ -159,7 +158,6 @@ class Ranking(object):
         """
         os.chdir(self.data_dir)
         file = open('match_history.csv','a')
-        print('test')
         file.write('{},{},{},{},{},{}\n'.format(p1.name,\
                                             p1.rating,\
                                             p2.name,\
