@@ -8,7 +8,7 @@ def main():
     '''
 
     e = elo.ELO()
-    r = ranking.Ranking(os.path.join(os.getcwd(),'test_ranking'))
+    r = ranking.Ranking(os.path.join(os.getcwd(),'example_ranking'))
 
     p1 = player.Player("p1")
     p2 = player.Player("p2")
@@ -30,8 +30,6 @@ def main():
     Add players to the rankings
     '''
 
-    print("ADDING PLAYERS:\n")
-
     r.add_player(p1)
     r.add_player(p2)
     r.add_player(p3)
@@ -47,10 +45,6 @@ def main():
     r.add_player(p13)
     r.add_player(p14)
     r.add_player(p15)
-
-    print(r.get_all_players())
-
-    print("\n##################################")
     
     '''
     Play a few games randomly
