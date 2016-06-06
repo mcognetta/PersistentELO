@@ -56,12 +56,13 @@ class Ranking(object):
             db = sqlite.connect('rankings.db')
             cur = db.cursor()
 
-            cur.execute('Create TABLE Players(Name TEXT, Rating REAL, Wins INT, Losses INT, Draws INT)')
+            cur.execute('Create TABLE Players(Name TEXT , Rating REAL,\
+                        Wins INT, Losses INT, Draws INT)')
             db.commit()
 
             db.close()
 
-            file = open('match_history.csv','a')
+            file = open('match_history.csv', 'a')
             file.write('p1_name,p1_rating,p2_name,p2_rating,p1_score,p2_score\n')
             file.close()
 
@@ -88,7 +89,8 @@ class Ranking(object):
         db = sqlite.connect('rankings.db')
         cur = db.cursor()
 
-        cur.execute('SELECT EXISTS(SELECT 1 FROM Players WHERE Name=? LIMIT 1)',(p.name,))
+        cur.execute('SELECT EXISTS(SELECT 1 FROM Players WHERE Name=?\
+                     LIMIT 1)', (p.name,))
         db.commit()
 
         exists = cur.fetchone()[0]
@@ -98,7 +100,8 @@ class Ranking(object):
             return False
 
         else:
-            cur.execute('INSERT INTO Players VALUES(?,?,?,?,?)',(p.name,p.rating,p.wins,p.losses,p.draws,))
+            cur.execute('INSERT INTO Players VALUES(?,?,?,?,?)',
+                        (p.name, p.rating, p.wins, p.losses, p.draws,))
             db.commit()
 
             db.close()
@@ -132,13 +135,15 @@ class Ranking(object):
         db = sqlite.connect('rankings.db')
         cur = db.cursor()
 
-        cur.execute('SELECT EXISTS(SELECT 1 FROM Players WHERE Name=? LIMIT 1)',(p.name,))
+        cur.execute('SELECT EXISTS(SELECT 1 FROM Players WHERE Name=? LIMIT 1)',
+                    (p.name, ))
 
         exists = cur.fetchone()
 
         if exists:
-            cur.execute('UPDATE Players SET Rating=?,Wins=?,Losses=?,Draws=? WHERE Name=?',
-                       (p.rating,p.wins,p.losses,p.draws,p.name))
+            cur.execute('UPDATE Players SET Rating=?,Wins=?,Losses=?,\
+                        Draws=? WHERE Name=?',
+                        (p.rating, p.wins, p.losses, p.draws, p.name))
             db.commit()
             db.close()
             return True
@@ -152,12 +157,12 @@ class Ranking(object):
         """Stores a record of a played game.
 
         Gets the score of a game and the updated ratings
-        of the involved players and writes it to the 
+        of the involved players and writes it to the
         match_history.csv file in the data_dir.
 
         """
         os.chdir(self.data_dir)
-        file = open('match_history.csv','a')
+        file = open('match_history.csv', 'a')
         file.write('{},{},{},{},{},{}\n'.format(p1.name,\
                                             p1.rating,\
                                             p2.name,\

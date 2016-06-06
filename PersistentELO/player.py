@@ -27,6 +27,7 @@ class Player(object):
     """
 
     def __init__(self, name, rating=1200.0, wins=0, losses=0, draws=0):
+
         self.name = name
         self.rating = float(rating)
         self.wins = wins
@@ -34,31 +35,48 @@ class Player(object):
         self.draws = draws
 
     def total_games(self):
+        '''Returns the total number of games a player has played'''
         return self.wins+self.losses+self.draws
 
     def __eq__(self, other):
+        '''Determines if two players have the same rating'''
         return self.rating == other.rating
 
     def __ne__(self, other):
+        '''Determines if two players do not have the same rating'''
         return self.rating != other.rating
 
     def __lt__(self, other):
+        '''Determines if a player's rating is less than another's rating'''
         return self.rating < other.rating
 
     def __gt__(self, other):
+        '''Determines if a player's rating is greater than another's rating'''
         return self.rating > other.rating
 
     def __le__(self, other):
+        '''Determines if the player's rating is less than or equal to
+        another's rating
+        '''
         return self.rating <= other.rating
 
     def __ge__(self, other):
+        '''Determines if the player's rating is greater than or equal to
+        another's rating
+        '''
         return self.rating >= other.rating
 
     def __int__(self):
+        '''Returns the rating of the player rounded to the nearest int'''
         return round(self.rating)
 
     def __str__(self):
+        '''Returns a human readable string representing the player
+
+        Includes name, rating, and record
+        '''
         return """Player: {}\nRating: {}\nRecord: {}-{}-{}""" \
-                .format(self.name,self.rating,self.wins,self.losses,self.draws)
+                .format(self.name, self.rating, self.wins, self.losses,
+                        self.draws)
 
     __repr__ = __str__

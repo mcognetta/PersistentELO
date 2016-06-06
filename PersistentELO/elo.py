@@ -86,7 +86,7 @@ class ELO(object):
         p1_expected = p1_transform/(p1_transform+p2_transform)
         p2_expected = p2_transform/(p1_transform+p2_transform)
 
-        return p1_expected,p2_expected
+        return p1_expected, p2_expected
 
     def update_elo(self, p1, p2, score):
 
@@ -123,7 +123,7 @@ class ELO(object):
 
             score = tuple(score)
 
-            p1_expected, p2_expected = self.expected_score(p1,p2)
+            p1_expected, p2_expected = self.expected_score(p1, p2)
 
             p1_score = score[0]
             p2_score = score[1]
