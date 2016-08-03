@@ -37,7 +37,7 @@ r.store_player(p_2)
 r.store_game(p_1,p_2,(0,1))
 ``` 
 
-###Multiple Simultanious Rankings
+###Multiple Simultaneous Rankings
 We will consider two players playing each other in StarCraft.
 
 ```python
